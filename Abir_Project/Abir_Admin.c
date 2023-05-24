@@ -65,20 +65,43 @@ void showStuData(){
 void updateStuData(){
     showStuData();
     printf("Select an ID to update: ");
-    int id_no;
+    int id_no, t_sno;
     struct StudentData tempSt;
     scanf("%d",&id_no);
     for(int i=0; i<sno; i++){
-        if(student[sno].id = id_no){
-            tempSt = student[sno];
+        if(student[i].id == id_no){
+            t_sno = i;
         }
     }
 
+    int c;
     printf("Update Info [enter 1 to 'yes' or 0 to 'no']\n");
-    printf("Do you want to update First Name? [%s]",tempSt.fname);
-    printf("Do you want to update last Name? [%s]",tempSt.fname);
-    printf("Do you want to update Department? [%s]",tempSt.dept);
-    printf("Do you want to update CGPA? [%.2f]",tempSt.cgpa);
+    printf("Do you want to update First Name? [ %s ]:",student[t_sno].fname);
+    scanf("%d",&c);
+    if(c==1){
+        printf("Enter updated first name: ");
+        scanf("%s",&student[t_sno].fname);
+    }
+    printf("Do you want to update last Name? [%s]",student[t_sno].lname);
+    scanf("%d",&c);
+    if(c==1){
+        printf("Enter updated last name: ");
+        scanf("%s",&student[t_sno].lname);
+    }
+    printf("Do you want to update Department? [%s]",student[t_sno].dept);
+    scanf("%d",&c);
+    if(c==1){
+        printf("Enter updated department: ");
+        scanf("%s",&student[t_sno].dept);
+    }
+    printf("Do you want to update CGPA? [%.2f]",student[t_sno].cgpa);
+    scanf("%d",&c);
+    if(c==1){
+        printf("Enter updated CGPA: ");
+        scanf("%f",&student[t_sno].cgpa);
+    }
+
+    // student[t_sno] = tempSt;
 }
 
 void deleteStuData(){
