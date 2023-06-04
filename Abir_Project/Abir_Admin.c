@@ -5,7 +5,7 @@
 struct stuMarks
 {
     char sub[30];
-    float quiz, assignment, mid, final;
+    float quiz, assignment, mid, final, total;
     char grade[5];
 };
 
@@ -151,19 +151,8 @@ void deleteStuData()
     sno--;
 }
 
-void addStudentMarks()
+void addMarks(int ind)
 {
-    int t_id;
-    printf("Enter ID whose marks you want to add: ");
-    scanf("%d",&t_id);
-    int ind;
-    for(int i=0; i<sno; i++){
-        if(t_id==student[i].id){
-            ind = i;
-            break;
-        }
-    }
-
     int sub_id = student[ind].m_id;
 
     printf("Subject: ");
@@ -179,6 +168,7 @@ void addStudentMarks()
 
     float total;
     total = student[ind].marks[sub_id].quiz + student[ind].marks[sub_id].assignment + student[ind].marks[sub_id].mid + student[ind].marks[sub_id].final;
+    student[ind].marks[sub_id].total = total;
     if(total >= 93) strcpy(student[ind].marks->grade,"A");
     else if(total < 93 && total >=90) strcpy(student[ind].marks[sub_id].grade,"A-");
     else if(total < 90 && total >= 87) strcpy(student[ind].marks[sub_id].grade,"B+");
@@ -193,7 +183,55 @@ void addStudentMarks()
 
     student[ind].m_id++;
 
-    printf("Do you want to add another subject");
+    printf("\nDo you want to add another subject\n");
+    printf("1. YES\n2. NO\n");
+    printf("Choice: ");
+    int c;
+    scanf("%d",&c);
+    if(c==1){
+        addMarks(ind);
+    }
+    else return;
+}
+
+void addStudentMarks()
+{
+    int t_id;
+    printf("Enter ID whose marks you want to add: ");
+    scanf("%d",&t_id);
+    int ind,found=0;
+    for(int i=0; i<sno; i++){
+        if(t_id==student[i].id){
+            ind = i;
+            found = 1;
+            break;
+        }
+    }
+
+    if(found==1)
+        addMarks(ind);
+    else
+        printf("Invalid Id\n\n");
+}
+
+void showStudentMarks()
+{
+    int id,ind;
+    printf("Enter the id: ");
+    scanf("%d",&id);
+
+    for(int i=0; i<sno; i++){
+        if(student[i].id == id){
+            ind = i;
+            break;
+        }
+    }
+
+    printf("\nMarks of %s %s\n\n",student[ind].fname,student[ind].lname);
+    printf("Subject\tAssignments\tQuiz\tMid\tFinal\ttotal\tGrade\n");
+    for(int i=0; i<student[ind].m_id; i++){
+        printf("%s\t%.2f\t\t%.2f\t%.2f\t%.2f\t%.2f\t%s\n",student[ind].marks[i].sub,student[ind].marks[i].assignment,student[ind].marks[i].quiz,student[ind].marks[i].mid,student[ind].marks[i].final,student[ind].marks[i].total,student[ind].marks[i].grade);
+    }
 }
 
 void Admin()
@@ -208,6 +246,7 @@ void Admin()
         printf("3. Delete a student information\n");
         printf("4. Show Student information\n");
         printf("5. Add Student Marks\n");
+        printf("6. Show Student Marks\n");
         printf("Choice: ");
         scanf("%d", &choice);
         switch (choice)
@@ -227,7 +266,9 @@ void Admin()
         case 5:
             addStudentMarks();
             break;
-
+        case 6:
+            showStudentMarks();
+            break;
         default:
             break;
         }
