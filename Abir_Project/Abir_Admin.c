@@ -301,7 +301,10 @@ void addStudentMarks()
     }
 
     if(found==1)
-        addMarks(ind);
+        {
+            addMarks(ind);
+            clearWindow();
+        }
     else
         printf("Invalid Id\n\n");
 }
