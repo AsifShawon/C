@@ -19,9 +19,11 @@ struct StudentData
     struct stuMarks marks[30];
 };
 
+// declared a array of Studentdata
 struct StudentData student[100];
-int sno = 0;
+int sno = 0; // that keep tracks of student array
 
+// storing student information in a file
 void saveStudentDataToFile()
 {
     FILE *file = fopen("student_data.txt", "w");
@@ -39,6 +41,7 @@ void saveStudentDataToFile()
     fclose(file);
 }
 
+// storing student marks information in a file
 void saveStudentMarksToFile()
 {
     FILE *file = fopen("student_marks.txt", "w");
@@ -59,6 +62,7 @@ void saveStudentMarksToFile()
     fclose(file);
 }
 
+// loading student information from file
 void loadStudentDataFromFile()
 {
     FILE *file = fopen("student_data.txt", "r");
@@ -86,6 +90,7 @@ void loadStudentDataFromFile()
     fclose(file);
 }
 
+// loading student marks information from file
 void loadStudentMarksFromFile()
 {
     FILE *file = fopen("student_marks.txt", "r");
@@ -124,6 +129,7 @@ void loadStudentMarksFromFile()
     fclose(file);
 }
 
+// inserting student data
 void insertStuData()
 {
     printf("Enter student ID: ");
@@ -142,6 +148,7 @@ void insertStuData()
     saveStudentDataToFile();
 }
 
+// deleting a data
 void deleteStuData()
 {
     int c;
@@ -174,6 +181,8 @@ void deleteStuData()
     }
     saveStudentDataToFile();
 }
+
+// showing the stored data
 void showStuData()
 {
     printf("Student Information\n\n");
@@ -191,6 +200,7 @@ void showStuData()
     }
 }
 
+// updating a data
 void updateStuData()
 {
     showStuData();
@@ -240,6 +250,7 @@ void updateStuData()
     clearWindow();
 }
 
+// adding marks of students
 void addMarks(int ind)
 {
     int sub_id = student[ind].m_id;
@@ -316,6 +327,7 @@ void addStudentMarks()
     }
 }
 
+// showing student marks
 void showStudentMarks()
 {
     int id,ind;
@@ -344,11 +356,13 @@ void showStudentMarks()
     }
 }
 
+// clearing the window
 void clearWindow()
 {
     system("cls");
 }
 
+// starting of Admin window
 void Admin()
 {
     loadStudentDataFromFile();
@@ -397,4 +411,3 @@ int main()
     Admin();
     return 0;
 }
-
