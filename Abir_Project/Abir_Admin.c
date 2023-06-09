@@ -301,12 +301,19 @@ void addStudentMarks()
     }
 
     if(found==1)
+    {
+        addMarks(ind);
+        clearWindow();
+    }
+    else
+    {
+        printf("Invalid Id\n");
+        printf("\nEnter any key to continue...");
+        if(_getch())
         {
-            addMarks(ind);
             clearWindow();
         }
-    else
-        printf("Invalid Id\n\n");
+    }
 }
 
 void showStudentMarks()
