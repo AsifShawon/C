@@ -194,7 +194,7 @@ void showStuData()
     }
 
     printf("\nEnter any key to continue...");
-    if(_getch())
+    if (_getch())
     {
         clearWindow();
     }
@@ -256,30 +256,41 @@ void addMarks(int ind)
     int sub_id = student[ind].m_id;
 
     printf("Subject: ");
-    scanf("%s",&student[ind].marks[sub_id].sub);
+    scanf("%s", &student[ind].marks[sub_id].sub);
     printf("Quiz marks: ");
-    scanf("%f",&student[ind].marks[sub_id].quiz);
+    scanf("%f", &student[ind].marks[sub_id].quiz);
     printf("Assignment marks: ");
-    scanf("%f",&student[ind].marks[sub_id].assignment);
+    scanf("%f", &student[ind].marks[sub_id].assignment);
     printf("Mid marks: ");
-    scanf("%f",&student[ind].marks[sub_id].mid);
+    scanf("%f", &student[ind].marks[sub_id].mid);
     printf("Final marks: ");
-    scanf("%f",&student[ind].marks[sub_id].final);
+    scanf("%f", &student[ind].marks[sub_id].final);
 
     float total;
     total = student[ind].marks[sub_id].quiz + student[ind].marks[sub_id].assignment + student[ind].marks[sub_id].mid + student[ind].marks[sub_id].final;
     student[ind].marks[sub_id].total = total;
-    if(total >= 93) strcpy(student[ind].marks->grade,"A");
-    else if(total < 93 && total >=90) strcpy(student[ind].marks[sub_id].grade,"A-");
-    else if(total < 90 && total >= 87) strcpy(student[ind].marks[sub_id].grade,"B+");
-    else if(total < 87 && total >= 83) strcpy(student[ind].marks[sub_id].grade,"B");
-    else if(total < 83 && total >= 80) strcpy(student[ind].marks[sub_id].grade,"B-");
-    else if(total < 80 && total >= 77) strcpy(student[ind].marks[sub_id].grade,"C+");
-    else if(total < 77 && total >= 73) strcpy(student[ind].marks[sub_id].grade,"C");
-    else if(total < 73 && total >= 70) strcpy(student[ind].marks[sub_id].grade,"C-");
-    else if(total < 70 && total >= 67) strcpy(student[ind].marks[sub_id].grade,"D+");
-    else if(total < 67 && total >= 60) strcpy(student[ind].marks[sub_id].grade,"D");
-    else if(total < 60) strcpy(student[ind].marks[sub_id].grade,"F");
+    if (total >= 93)
+        strcpy(student[ind].marks->grade, "A");
+    else if (total < 93 && total >= 90)
+        strcpy(student[ind].marks[sub_id].grade, "A-");
+    else if (total < 90 && total >= 87)
+        strcpy(student[ind].marks[sub_id].grade, "B+");
+    else if (total < 87 && total >= 83)
+        strcpy(student[ind].marks[sub_id].grade, "B");
+    else if (total < 83 && total >= 80)
+        strcpy(student[ind].marks[sub_id].grade, "B-");
+    else if (total < 80 && total >= 77)
+        strcpy(student[ind].marks[sub_id].grade, "C+");
+    else if (total < 77 && total >= 73)
+        strcpy(student[ind].marks[sub_id].grade, "C");
+    else if (total < 73 && total >= 70)
+        strcpy(student[ind].marks[sub_id].grade, "C-");
+    else if (total < 70 && total >= 67)
+        strcpy(student[ind].marks[sub_id].grade, "D+");
+    else if (total < 67 && total >= 60)
+        strcpy(student[ind].marks[sub_id].grade, "D");
+    else if (total < 60)
+        strcpy(student[ind].marks[sub_id].grade, "F");
 
     student[ind].m_id++;
 
@@ -287,23 +298,24 @@ void addMarks(int ind)
     printf("1. YES\n2. NO\n");
     printf("Choice: ");
     int c;
-    scanf("%d",&c);
-    if(c==1)
+    scanf("%d", &c);
+    if (c == 1)
     {
         addMarks(ind);
     }
-    else return;
+    else
+        return;
 }
 
 void addStudentMarks()
 {
     int t_id;
     printf("Enter ID whose marks you want to add: ");
-    scanf("%d",&t_id);
-    int ind,found=0;
-    for(int i=0; i<sno; i++)
+    scanf("%d", &t_id);
+    int ind, found = 0;
+    for (int i = 0; i < sno; i++)
     {
-        if(t_id==student[i].id)
+        if (t_id == student[i].id)
         {
             ind = i;
             found = 1;
@@ -311,7 +323,7 @@ void addStudentMarks()
         }
     }
 
-    if(found==1)
+    if (found == 1)
     {
         addMarks(ind);
         clearWindow();
@@ -320,37 +332,38 @@ void addStudentMarks()
     {
         printf("Invalid Id\n");
         printf("\nEnter any key to continue...");
-        if(_getch())
+        if (_getch())
         {
             clearWindow();
         }
     }
+    saveStudentMarksToFile();
 }
 
 // showing student marks
 void showStudentMarks()
 {
-    int id,ind;
+    int id, ind;
     printf("Enter the id: ");
-    scanf("%d",&id);
+    scanf("%d", &id);
 
-    for(int i=0; i<sno; i++)
+    for (int i = 0; i < sno; i++)
     {
-        if(student[i].id == id)
+        if (student[i].id == id)
         {
             ind = i;
             break;
         }
     }
 
-    printf("\nMarks of %s %s\n\n",student[ind].fname,student[ind].lname);
+    printf("\nMarks of %s %s\n\n", student[ind].fname, student[ind].lname);
     printf("Subject\tAssignments\tQuiz\tMid\tFinal\ttotal\tGrade\n");
-    for(int i=0; i<student[ind].m_id; i++)
+    for (int i = 0; i < student[ind].m_id; i++)
     {
-        printf("%s\t%.2f\t\t%.2f\t%.2f\t%.2f\t%.2f\t%s\n",student[ind].marks[i].sub,student[ind].marks[i].assignment,student[ind].marks[i].quiz,student[ind].marks[i].mid,student[ind].marks[i].final,student[ind].marks[i].total,student[ind].marks[i].grade);
+        printf("%s\t%.2f\t\t%.2f\t%.2f\t%.2f\t%.2f\t%s\n", student[ind].marks[i].sub, student[ind].marks[i].assignment, student[ind].marks[i].quiz, student[ind].marks[i].mid, student[ind].marks[i].final, student[ind].marks[i].total, student[ind].marks[i].grade);
     }
     printf("\nEnter any key to continue...");
-    if(_getch())
+    if (_getch())
     {
         clearWindow();
     }
@@ -365,10 +378,8 @@ void clearWindow()
 // starting of Admin window
 void Admin()
 {
-    loadStudentDataFromFile();
-    loadStudentMarksFromFile();
-
-    while (1)
+    int run = 1;
+    while (run)
     {
         int choice;
         printf("Select any of 6\n");
@@ -378,6 +389,7 @@ void Admin()
         printf("4. Show Student information\n");
         printf("5. Add Student Marks\n");
         printf("6. Show Student Marks\n");
+        printf("7. Exit\n");
         printf("Choice: ");
         scanf("%d", &choice);
         switch (choice)
@@ -401,13 +413,76 @@ void Admin()
             showStudentMarks();
             break;
         default:
-            break;
+            run = 0;
         }
+        if (_getch())
+        {
+            clearWindow();
+        }
+    }
+}
+
+void Student()
+{
+    int id, found_at = -1;
+    printf("Enter your ID: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < sno; i++)
+    {
+        if (student[i].id == id)
+        {
+            found_at = i;
+        }
+    }
+
+    if (found_at == -1)
+    {
+        printf("Student Info Not found :(\n");
+        return;
+    }
+
+    printf("\nMarks of %s %s\n\n", student[found_at].fname, student[found_at].lname);
+    printf("Subject\tAssignments\tQuiz\tMid\tFinal\ttotal\tGrade\n");
+    for (int i = 0; i < student[found_at].m_id; i++)
+    {
+        printf("%s\t%.2f\t\t%.2f\t%.2f\t%.2f\t%.2f\t%s\n", student[found_at].marks[i].sub, student[found_at].marks[i].assignment, student[found_at].marks[i].quiz, student[found_at].marks[i].mid, student[found_at].marks[i].final, student[found_at].marks[i].total, student[found_at].marks[i].grade);
+    }
+    printf("\nEnter any key to continue...");
+    if (_getch())
+    {
+        clearWindow();
     }
 }
 
 int main()
 {
-    Admin();
+    int run = 1;
+    loadStudentDataFromFile();
+    loadStudentMarksFromFile();
+    while (run)
+    {
+        int who;
+        printf("Who are you? : \n");
+        printf("1. Admin / Teacher\n");
+        printf("2. Student\n");
+        printf("3. Exit\n");
+        printf("Choose: ");
+        scanf("%d", &who);
+        switch (who)
+        {
+        case 1:
+            Admin();
+            break;
+        case 2:
+            Student();
+            break;
+        default:
+            run = 0;
+        }
+    }
+    saveStudentDataToFile();
+    saveStudentMarksToFile();
+
     return 0;
 }
