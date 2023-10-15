@@ -23,38 +23,31 @@ struct StudentData
 struct StudentData student[100];
 int sno = 0; // that keep tracks of student array
 
-// storing student information in a file
-void saveStudentDataToFile()
-{
+// Function to save student information to a file
+void saveStudentDataToFile() {
     FILE *file = fopen("student_data.txt", "w");
-    if (file == NULL)
-    {
-        printf("Failed to open the file.\n");
+    if (file == NULL) {
+        printf("Error opening student_data.txt");
         return;
     }
 
-    for (int i = 0; i < sno; i++)
-    {
+    for (int i = 0; i < sno; i++) {
         fprintf(file, "%d %s %s %s %.2f %d\n", student[i].id, student[i].fname, student[i].lname, student[i].dept, student[i].cgpa, student[i].m_id);
     }
 
     fclose(file);
 }
 
-// storing student marks information in a file
-void saveStudentMarksToFile()
-{
+// Function to save student marks information to a file
+void saveStudentMarksToFile() {
     FILE *file = fopen("student_marks.txt", "w");
-    if (file == NULL)
-    {
-        printf("Failed to open the file.\n");
+    if (file == NULL) {
+        printf("Error opening student_marks.txt");
         return;
     }
 
-    for (int i = 0; i < sno; i++)
-    {
-        for (int j = 0; j < student[i].m_id; j++)
-        {
+    for (int i = 0; i < sno; i++) {
+        for (int j = 0; j < student[i].m_id; j++) {
             fprintf(file, "%d %s %.2f %.2f %.2f %.2f %.2f %s\n", student[i].id, student[i].marks[j].sub, student[i].marks[j].quiz, student[i].marks[j].assignment, student[i].marks[j].mid, student[i].marks[j].final, student[i].marks[j].total, student[i].marks[j].grade);
         }
     }
@@ -62,13 +55,11 @@ void saveStudentMarksToFile()
     fclose(file);
 }
 
-// loading student information from file
-void loadStudentDataFromFile()
-{
+// Function to load student information from a file
+void loadStudentDataFromFile() {
     FILE *file = fopen("student_data.txt", "r");
-    if (file == NULL)
-    {
-        printf("Failed to open the file.\n");
+    if (file == NULL) {
+        printf("Error opening student_data.txt");
         return;
     }
 
@@ -76,8 +67,7 @@ void loadStudentDataFromFile()
     float cgpa;
     char fname[30], lname[30], dept[20];
 
-    while (fscanf(file, "%d %s %s %s %f %d", &id, fname, lname, dept, &cgpa, &m_id) != EOF)
-    {
+    while (fscanf(file, "%d %s %s %s %f %d", &id, fname, lname, dept, &cgpa, &m_id) != EOF) {
         student[sno].id = id;
         strcpy(student[sno].fname, fname);
         strcpy(student[sno].lname, lname);
@@ -90,13 +80,11 @@ void loadStudentDataFromFile()
     fclose(file);
 }
 
-// loading student marks information from file
-void loadStudentMarksFromFile()
-{
+// Function to load student marks information from a file
+void loadStudentMarksFromFile() {
     FILE *file = fopen("student_marks.txt", "r");
-    if (file == NULL)
-    {
-        printf("Failed to open the file.\n");
+    if (file == NULL) {
+        perror("Error opening student_marks.txt");
         return;
     }
 
@@ -104,31 +92,29 @@ void loadStudentMarksFromFile()
     float quiz, assignment, mid, final, total;
     char sub[30], grade[5];
 
-    while (fscanf(file, "%d %s %f %f %f %f %f %s", &id, sub, &quiz, &assignment, &mid, &final, &total, grade) != EOF)
-    {
-        int ind;
-        for (int i = 0; i < sno; i++)
-        {
-            if (student[i].id == id)
-            {
+    while (fscanf(file, "%d %s %f %f %f %f %f %s", &id, sub, &quiz, &assignment, &mid, &final, &total, grade) != EOF) {
+        int ind = -1;
+        for (int i = 0; i < sno; i++) {
+            if (student[i].id == id) {
                 ind = i;
                 break;
             }
         }
 
-        strcpy(student[ind].marks[student[ind].m_id].sub, sub);
-        student[ind].marks[student[ind].m_id].quiz = quiz;
-        student[ind].marks[student[ind].m_id].assignment = assignment;
-        student[ind].marks[student[ind].m_id].mid = mid;
-        student[ind].marks[student[ind].m_id].final = final;
-        student[ind].marks[student[ind].m_id].total = total;
-        strcpy(student[ind].marks[student[ind].m_id].grade, grade);
-        student[ind].m_id++;
+        if (ind != -1 && student[ind].m_id < 30) {
+            strcpy(student[ind].marks[student[ind].m_id].sub, sub);
+            student[ind].marks[student[ind].m_id].quiz = quiz;
+            student[ind].marks[student[ind].m_id].assignment = assignment;
+            student[ind].marks[student[ind].m_id].mid = mid;
+            student[ind].marks[student[ind].m_id].final = final;
+            student[ind].marks[student[ind].m_id].total = total;
+            strcpy(student[ind].marks[student[ind].m_id].grade, grade);
+            student[ind].m_id++;
+        }
     }
 
     fclose(file);
 }
-
 // inserting student data
 void insertStuData()
 {
@@ -143,9 +129,8 @@ void insertStuData()
     printf("CGPA: ");
     scanf("%f", &student[sno].cgpa);
     sno++;
-
-    clearWindow();
     saveStudentDataToFile();
+    clearWindow();
 }
 
 // deleting a data
@@ -179,7 +164,6 @@ void deleteStuData()
     {
         clearWindow();
     }
-    saveStudentDataToFile();
 }
 
 // showing the stored data
@@ -337,7 +321,6 @@ void addStudentMarks()
             clearWindow();
         }
     }
-    saveStudentMarksToFile();
 }
 
 // showing student marks
@@ -415,10 +398,7 @@ void Admin()
         default:
             run = 0;
         }
-        if (_getch())
-        {
-            clearWindow();
-        }
+        clearWindow();
     }
 }
 
@@ -433,6 +413,7 @@ void Student()
         if (student[i].id == id)
         {
             found_at = i;
+            break;
         }
     }
 
